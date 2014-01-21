@@ -6,8 +6,7 @@
 
 using namespace std;
 
-// int _tmain( int argc, TCHAR *argv[] )
-int main ( int argc, char argv[] )
+int _tmain( int argc, TCHAR *argv[] )
 {
     STARTUPINFO si;
     PROCESS_INFORMATION pi;
@@ -23,12 +22,20 @@ int main ( int argc, char argv[] )
     }
     */
     
-    string argz = "nw.exe package.json " + *argv;
-    cout << "why doesn't this work?" << argv[1];
+    
+    // Combine our constant arguments (program and package) with the passed
+    // file name argument.
+    string fileName = argv[1];
+    string argString = "nw.exe package.json " + fileName;
+    
+    // Convert our argument string to a TCHAR so CreateProcess doesn't complain.
+    TCHAR *arg_tchar = new TCHAR[argString.size()+1];
+    arg_tchar[argString.size()]=0;
+    std::copy(argString.begin(), argString.end(), arg_tchar);
     
     // Start the child process. 
     if( !CreateProcess( NULL,   // No module name (use command line)
-        argv[1],        // Command line
+        arg_tchar,        // Command line
         NULL,           // Process handle not inheritable
         NULL,           // Thread handle not inheritable
         FALSE,          // Set handle inheritance to FALSE
@@ -43,10 +50,12 @@ int main ( int argc, char argv[] )
         return 1;
     }
 
+/*
     // Wait until child process exits.
     WaitForSingleObject( pi.hProcess, INFINITE );
 
     // Close process and thread handles. 
     CloseHandle( pi.hProcess );
     CloseHandle( pi.hThread );
+    */
 }
