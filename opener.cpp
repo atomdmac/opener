@@ -14,13 +14,6 @@ int _tmain( int argc, TCHAR *argv[] )
     ZeroMemory( &si, sizeof(si) );
     si.cb = sizeof(si);
     ZeroMemory( &pi, sizeof(pi) );
-    /*
-    if( argc != 2 )
-    {
-        printf("Usage: %s [cmdline]\n", argv[0]);
-        return 0;
-    }
-    */
     
 	// Define launch string for CreateProcess (see below).
     string argString = "nw.exe package.json";
@@ -39,7 +32,7 @@ int _tmain( int argc, TCHAR *argv[] )
     
     // Start the child process. 
     if( !CreateProcess( NULL,   // No module name (use command line)
-        arg_tchar,        // Command line
+        arg_tchar,      // Command line
         NULL,           // Process handle not inheritable
         NULL,           // Thread handle not inheritable
         FALSE,          // Set handle inheritance to FALSE
@@ -53,13 +46,4 @@ int _tmain( int argc, TCHAR *argv[] )
         printf( "CreateProcess failed (%d).\n", GetLastError() );
         return 1;
     }
-
-/*
-    // Wait until child process exits.
-    WaitForSingleObject( pi.hProcess, INFINITE );
-
-    // Close process and thread handles. 
-    CloseHandle( pi.hProcess );
-    CloseHandle( pi.hThread );
-    */
 }
