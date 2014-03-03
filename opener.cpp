@@ -22,11 +22,15 @@ int _tmain( int argc, TCHAR *argv[] )
     }
     */
     
+	// Define launch string for CreateProcess (see below).
+    string argString = "nw.exe package.json";
     
-    // Combine our constant arguments (program and package) with the passed
-    // file name argument.
-    string fileName = argv[1];
-    string argString = "nw.exe package.json " + fileName;
+    // Combine our constant arguments (program and package) with the passed file
+	// name argument (if one has been passed).
+    if(argv[1]) {
+	    string fileName = argv[1];
+    	argString += " " + fileName;
+    }
     
     // Convert our argument string to a TCHAR so CreateProcess doesn't complain.
     TCHAR *arg_tchar = new TCHAR[argString.size()+1];
